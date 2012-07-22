@@ -28,8 +28,13 @@ fi
 while [ ${COUNTER} -le $1 ]
         do
         URL=http://images.ucomics.com/comics/ga/$(date -v-${COUNTER}d +%Y)/ga$(date -v-${COUNTER}d +%y%m%d).gif
-        if [ ! -f $2/ga$(date -v-${COUNTER}d +%y%m%d).gif ]; then
+        if [ ! -f $2/ga$(date -v-${COUNTER}d +%Y%m%d).gif ]; then
             curl -# -f $URL -o $2/ga$(date -v-${COUNTER}d +%y%m%d).gif
+            
+            if [ $? -eq 0 ]
+                then
+                mv $2/ga$(date -v-${COUNTER}d +%y%m%d).gif $2/ga$(date -v-${COUNTER}d +%Y%m%d).gif
+            fi
         fi
         COUNTER=`expr ${COUNTER} + 1`
 done
